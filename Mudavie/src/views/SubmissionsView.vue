@@ -254,6 +254,7 @@ const toggleSection = (section) => {
     font-size: 96px;
     font-weight: 500;
     text-shadow: 1px 1px 7px #fefcfc;
+    z-index: 50;
   }
   
   .hero-image {

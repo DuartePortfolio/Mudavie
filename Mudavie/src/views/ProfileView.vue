@@ -1,15 +1,6 @@
-<script setup>
-  import Navbar from '../components/Navbar.vue'
-</script>
 <template>
   <main class="profile-container">
     <Navbar></Navbar>
-    <img
-      loading="lazy"
-      src="https://cdn.builder.io/api/v1/image/assets/TEMP/0df680344f3015562d49e5ca5a355b27d4f40948dc1a2d6dc89ea6a8d5fb9354?placeholderIfAbsent=true&apiKey=24c5612ec37d4fbcbfc9ca0edfc13a50"
-      class="header-image"
-      alt=""
-    />
     <section class="profile-content">
       <h1 class="profile-title">O meu perfil</h1>
       <section class="user-info-section">
@@ -20,7 +11,7 @@
             <p class="ticket-type">Tipo de bilhete</p>
           </div>
         </div>
-        <button class="edit-button" tabindex="0">
+        <button class="edit-button" tabindex="0" @click="editUsername = true">
           <img
             loading="lazy"
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/4b468c9bcbc8da0ef12eaab79a1e10c19eeecd064c156ad9681e9483259cab39?placeholderIfAbsent=true&apiKey=24c5612ec37d4fbcbfc9ca0edfc13a50"
@@ -30,10 +21,15 @@
           <span>Editar</span>
         </button>
       </section>
+      <section v-if="editUsername" class="edit-username-section">
+        <form @submit.prevent="updateUsername">
+          <input type="text" v-model="newUsername" placeholder="New Username" required />
+          <button type="submit">Update</button>
+        </form>
+      </section>
       <section class="ticket-section">
         <div class="tickets">
           <h2 class="section-title">Bilhetes</h2>
-
         </div>
         <button class="edit-button" tabindex="0">
           <img
@@ -80,20 +76,43 @@
         </div>
       </section>
     </section>
+    <Footer></Footer>
   </main>
 </template>
 
 <script>
+import { ref } from 'vue';
 import { loginStore } from '../stores/loginStore.js';
+import Navbar from '@/components/Navbar.vue';
+import Footer from '@/components/Footer.vue';
 
 export default {
-  data(){
-    let loginInfo = loginStore()
-    return{
-      username: loginInfo.getUserInfo.username
-    }
+  components: {
+    Navbar,
+    Footer
+  },
+  setup() {
+    const store = loginStore();
+    const username = ref(store.getUserInfo.username);
+    const newUsername = ref('');
+    const editUsername = ref(false);
+
+    const updateUsername = () => {
+      const userInfo = { ...store.getUserInfo, username: newUsername.value };
+      store.user.username = newUsername.value;
+      username.value = newUsername.value;
+      localStorage.setItem(newUsername.value, JSON.stringify(userInfo));
+      editUsername.value = false;
+    };
+
+    return {
+      username,
+      newUsername,
+      editUsername,
+      updateUsername
+    };
   }
-}
+};
 </script>
 
 <style scoped>
@@ -139,6 +158,7 @@ export default {
   padding: 45px 21px;
   border: 2px solid #EEEFFF;
 }
+
 .ticket-section {
   display: flex;
   margin-top: 42px;
@@ -152,6 +172,7 @@ export default {
   justify-content: space-between;
   font: 400 24px Chopin-Trial, sans-serif;
 }
+
 .personal-info-section {
   display: flex;
   margin-top: 29px;
@@ -209,7 +230,6 @@ export default {
   object-fit: cover;
 }
 
-
 .section-header {
   display: flex;
   gap: 20px;
@@ -260,6 +280,27 @@ export default {
 .info-value {
   margin-top: 10px;
   color: #fff;
+}
+
+.edit-username-section {
+  margin-top: 20px;
+}
+
+.edit-username-section form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.edit-username-section input {
+  padding: 10px;
+  font-size: 16px;
+}
+
+.edit-username-section button {
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 @media (max-width: 991px) {

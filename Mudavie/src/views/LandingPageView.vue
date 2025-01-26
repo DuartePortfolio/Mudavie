@@ -1,373 +1,266 @@
-
 <script>
-  import Footer from '../components/Footer.vue'
+import Footer from '../components/Footer.vue'
+import { RouterLink } from 'vue-router'
 
-  export default{
-    components: {
-        Footer,
-    },
+export default {
+  components: {
+    Footer,
+    RouterLink
+  },
+  mounted() {
+    const section2 = document.querySelector('.section-2');
+
+    function checkVisibility() {
+      const rect = section2.getBoundingClientRect();
+      const windowHeight = (window.innerHeight || document.documentElement.clientHeight);
+      const windowWidth = (window.innerWidth || document.documentElement.clientWidth);
+
+      if (
+        rect.top <= windowHeight &&
+        rect.left <= windowWidth &&
+        rect.bottom >= 0 &&
+        rect.right >= 0
+      ) {
+        section2.classList.add('visible');
+        window.removeEventListener('scroll', checkVisibility);
+      }
+    }
+
+    window.addEventListener('scroll', checkVisibility);
+    checkVisibility();
   }
+}
 </script>
 
 <template>
-  <main class="landing-page">
-        <header class="hero-section">
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/613d10c3d6b6c88ad799def7dd18cce029819de59c02e08eaa43b6358897f711?placeholderIfAbsent=true&apiKey=24c5612ec37d4fbcbfc9ca0edfc13a50"
-            class="hero-background"
-            alt="Festival background image"
-          />
-          <nav class="navigation">
-            <a href="#about" class="nav-link">Sobre</a>
-            <a href="#entries" class="nav-link">Call for Entries</a>
-            <a href="#program" class="nav-link">Programa</a>
-            <a href="#tickets" class="nav-link">Bilhetes</a>
-          </nav>
-          <div class="hero-content">
-            <h1 class="festival-title">Festival Anual de Filmes<br />Mudos</h1>
-            <a href="/" class="home-link" aria-current="page">Home</a>
-          </div>
-        </header>
-    
-        <section class="about-section" id="about">
-          <div class="animation-container celebra-arte"></div>
-          <div class="content-wrapper">
-            <div class="content-grid">
-              <div class="animation-container que-fala"></div>
-              <p class="experience-description">
-                Uma experiência única onde os clássicos da sétima arte ganham
-                vida, acompanhados por música ao vivo e uma atmosfera envolvente.
-              </p>
-            </div>
-          </div>
-          <div class="animation-container sem-palavras"></div>
-          <a href="#about" class="about-button">Sobre</a>
-        </section>
-    
-        <section class="video-section">
-          <div class="video-container">
-            <img
-              loading="lazy"
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/49e296258ceca7d96937713fb6d7268bba1544db845a2313d7228b7671b8b772?placeholderIfAbsent=true&apiKey=24c5612ec37d4fbcbfc9ca0edfc13a50"
-              class="play-icon"
-              alt="Play video button"
-            />
-          </div>
-        </section>
-    
-        <section class="tickets-section" id="tickets">
-          <div class="tickets-content">
-            <div class="animation-container nao-fique"></div>
-            <div class="animation-container reserve-ja"></div>
-            <div class="animation-container garanta-lugar"></div>
-            <a href="#tickets" class="ticket-button">
-              <img
-                loading="lazy"
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/4b468c9bcbc8da0ef12eaab79a1e10c19eeecd064c156ad9681e9483259cab39?placeholderIfAbsent=true&apiKey=24c5612ec37d4fbcbfc9ca0edfc13a50"
-                alt="Ticket icon"
-                class="ticket-icon"
-              />
-              Bilhetes
-            </a>
-          </div>
-        </section>
-    
-        <Footer></Footer>
-      </main>
-    </template>
-    
-    <style scoped>
-    .landing-page {
-      background-color: #fff;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-    
-    .hero-section {
-      position: relative;
-      min-height: 1031px;
-      width: 100%;
-      font-family: Chopin-Trial, sans-serif;
-      font-weight: 400;
-      padding: 13px 36px 63px;
-    }
-    
-    .hero-background {
-      position: absolute;
-      inset: 0;
-      height: 100%;
-      width: 100%;
-      object-fit: cover;
-      object-position: center;
-    }
-    
-    .navigation {
-      position: relative;
-      display: flex;
-      gap: 100px;
-      font-size: 32px;
-      color: #eef;
-    }
-    
-    .nav-link {
-      color: inherit;
-      text-decoration: none;
-    }
-    
-    .hero-content {
-      position: relative;
-      display: flex;
-      margin-top: 823px;
-      align-items: start;
-      gap: 20px;
-      flex-wrap: wrap;
-      justify-content: space-between;
-    }
-    
-    .festival-title {
-      color: #eef;
-      font-size: 24px;
-      margin-top: 15px;
-    }
-    
-    .home-link {
-      color: #000;
-      font-size: 36px;
-      text-decoration: none;
-    }
-    
-    .about-section {
-      background-color: #ccc26e;
-      display: flex;
-      width: 100%;
-      flex-direction: column;
-      align-items: start;
-      padding: 200px 80px 61px 35px;
-    }
-    
-    .animation-container {
-      background-color: transparent;
-      display: flex;
-      width: 100%;
-      max-width: 1204px;
-      height: 188px;
-    }
-    
-    .content-wrapper {
-      z-index: 10;
-      margin-top: -28px;
-      width: 100%;
-      max-width: 1216px;
-    }
-    
-    .content-grid {
-      display: grid;
-      grid-template-columns: 58% 42%;
-      gap: 20px;
-    }
-    
-    .experience-description {
-      color: #000;
-      font: 600 20px Chopin-Trial, sans-serif;
-      align-self: center;
-    }
-    
-    .about-button {
-      border-radius: 10px;
-      background-color: #ccc26e;
-      margin-top: 186px;
-      color: #000;
-      padding: 14px 35px;
-      font: 600 20px Chopin-Trial, sans-serif;
-      text-decoration: none;
-    }
-    
-    .video-section {
-      background-color: #282934;
-      display: flex;
-      width: 100%;
-      justify-content: center;
-      padding: 287px 80px;
-    }
-    
-    .video-container {
-      background-color: #d9d9d9;
-      display: flex;
-      width: 750px;
-      justify-content: center;
-      padding: 157px 80px;
-    }
-    
-    .play-icon {
-      width: 110px;
-      aspect-ratio: 1;
-      object-fit: contain;
-    }
-    
-    .tickets-section {
-      background-color: #eef;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 321px 80px 188px;
-    }
-    
-    .tickets-content {
-      display: flex;
-      width: 100%;
-      max-width: 1058px;
-      flex-direction: column;
-      align-items: center;
-    }
-    
-    .ticket-button {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: 74px;
-      padding: 17px 43px;
-      text-decoration: none;
-      color: #000;
-      font: 600 20px Chopin-Trial, sans-serif;
-    }
-    
-    .site-footer {
-      background-color: #1e201e;
-      padding: 18px 41px 18px 17px;
-      color: #fff;
-    }
-    
-    .footer-content {
-      display: flex;
-      flex-direction: column;
-      gap: 40px;
-    }
-    
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 22% 16% 36% 26%;
-      gap: 20px;
-    }
-    
-    .footer-nav {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      font-size: 11px;
-    }
-    
-    .footer-logo {
-      width: 83px;
-      aspect-ratio: 1.51;
-      object-fit: contain;
-    }
-    
-    .footer-links {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 8px;
-    }
-    
-    .footer-links a {
-      color: #fff;
-      text-decoration: none;
-    }
-    
-    .festival-info,
-    .contact-info,
-    .sponsors {
-      font-size: 11px;
-    }
-    
-    .social-newsletter {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-    
-    .social-icons {
-      display: flex;
-      gap: 11px;
-    }
-    
-    .newsletter-button {
-      border: 1px solid #fff;
-      background: transparent;
-      color: #fff;
-      padding: 8px 41px;
-      font: 600 11px Chopin-Trial, sans-serif;
-      cursor: pointer;
-    }
-    
-    .copyright {
-      margin-top: 49px;
-      font-size: 11px;
-    }
-    
-    .visually-hidden {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      border: 0;
-    }
-    
-    @media (max-width: 991px) {
-      .hero-section {
-        max-width: 100%;
-        padding: 0 20px;
-      }
-    
-      .navigation {
-        max-width: 100%;
-        margin-right: 10px;
-      }
-    
-      .hero-content {
-        max-width: 100%;
-        margin-top: 40px;
-      }
-    
-      .about-section {
-        max-width: 100%;
-        padding: 100px 20px;
-      }
-    
-      .content-grid {
-        grid-template-columns: 1fr;
-      }
-    
-      .about-button {
-        margin-top: 40px;
-      }
-    
-      .video-section {
-        padding: 100px 20px;
-      }
-    
-      .video-container {
-        padding: 100px 20px;
-      }
-    
-      .tickets-section {
-        padding: 100px 20px;
-      }
-    
-      .footer-grid {
-        grid-template-columns: 1fr;
-      }
-    
-      .footer-nav,
-      .festival-info,
-      .contact-info,
-      .sponsors {
-        margin-top: 40px;
-      }
-    }
-    </style>
+  <main class="sections-container">
+    <section class="section section-1">
+      <header>
+        <nav>
+          <RouterLink to="/about"><h1>Sobre</h1></RouterLink>
+          <RouterLink to="/submissions"><h1>Submissões</h1></RouterLink>
+          <RouterLink to="/program"><h1>Programa</h1></RouterLink>
+          <RouterLink to="/tickets/General"><h1>Bilhetes</h1></RouterLink>
+        </nav>
+        <img id="img" src="../assets/logo.png" alt="">
+      </header>
+      <h1 class="bottom-left">Festival Anual de Cinema Mudo</h1>
+    </section>
+    <section class="section section-2">
+      <h1 class="main-title">CELEBRA A ARTE<br>QUE FALA<br>SEM PALAVRAS</h1>
+      <h1 class="description">Uma experiência única onde os clássicos da sétima arte ganham vida, acompanhados por música ao vivo e uma atmosfera envolvente.</h1>
+      <nav class="bottom-nav">
+        <RouterLink to="/about"><h1>Sobre</h1></RouterLink>
+      </nav>
+    </section>
+    <section class="section section-3">
+      <div class="video-container">
+        <iframe 
+          width="560" 
+          height="315" 
+          src="https://www.youtube.com/embed/COuQZ0gqAJw?si=Ds8K0gT8gIVMZmp6" 
+          title="YouTube video player" 
+          frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowfullscreen>
+        </iframe>
+      </div>
+    </section>
+    <section class="section section-4">
+      <h2>Section 4</h2>
+    </section>
+    <Footer />
+  </main>
+</template>
+
+<style scoped>
+@font-face {
+  font-family: 'Chopin';
+  src: url('../assets/ChopinVariable-Trial-Roman.ttf') format('truetype');
+  font-weight: 100;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  font-family: 'Chopin', sans-serif; 
+}
+
+header {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  z-index: 1000;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  color: white;
+  padding: 10px 20px;
+}
+
+header #img {
+  width: 150%;
+  max-width: 1200px;
+  height: auto;
+  border-radius: 50%;
+}
+
+.sections-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  box-sizing: border-box;
+  padding-top: 0px;
+}
+
+.section {
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 2rem;
+  scroll-snap-align: start;
+}
+
+.section-1 {
+  position: relative;
+  background-image: url('../assets/backgroundLanding.gif');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+  padding-top: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.section-1 .bottom-left {
+  position: absolute; 
+  bottom: 20px;
+  left: 20px;
+  font-size: 2rem;
+  color: white;
+  z-index: 1001; 
+}
+
+.section-1 header {
+  position: relative;
+  z-index: 10;
+}
+
+.section-2 {
+  background-color: #CCC26E;
+  color: black;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: left;
+  opacity: 0; 
+  transform: translateX(100%); 
+  transition: opacity 1s ease-out, transform 1s ease-out; 
+}
+
+.section-2.visible {
+  opacity: 1; 
+  transform: translateX(0); 
+}
+
+.section-2 .main-title {
+  font-size: 10rem;
+  font-weight: bold;
+  line-height: 1.2;
+  margin: 0 0 20px 0;
+}
+
+.section-2 .description {
+  font-size: 1.5rem;
+  line-height: 1.5;
+  max-width: 50%;
+  margin: 0 0 40px 0;
+  color: #000; 
+  font-weight: bolder;
+}
+
+.section-2 .bottom-nav {
+  display: flex;
+  gap: 20px;
+}
+
+.section-2 .nav-link {
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  font-style: italic;
+  margin: 0 0 40px 0;
+}
+
+.section-3 {
+  background-color: #282934;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.section-3 .video-container {
+  width: 80vw;
+  height: 45vw;
+  max-width: 1200px;
+  max-height: 450px;
+  position: relative;
+  padding-bottom: 40%; /* Adjusted aspect ratio */
+  height: 0;
+}
+
+.section-3 .video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.section-4 {
+  background-color: #EEEEFF;
+  color: black;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  header #img {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .section-3 .video-container {
+    width: 90vw;
+    height: 40vw; /* Adjusted height */
+  }
+}
+</style>

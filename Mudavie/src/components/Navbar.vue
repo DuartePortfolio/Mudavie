@@ -18,6 +18,7 @@ export default {
         const handleLogout = () => {
             store.logout();
             router.push('/');
+            alert('Terminou a sessão com sucesso.');
         };
 
         onMounted(() => {
@@ -57,7 +58,7 @@ export default {
         <div class="right">
             <div id="login" class="account-icon">
                 <img src="../assets/navbar/account.png" alt="Conta" height="25px" width="20px">
-                <span>Account</span>
+                <!-- <span>Account</span> -->
             </div>
             <a href="#"><img src="../assets/navbar/lang.png" alt="Lang" height="25px" style="padding-left: 25px;"></a>
             <div class="dropdown">

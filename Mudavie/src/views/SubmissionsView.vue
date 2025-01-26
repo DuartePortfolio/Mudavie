@@ -1,33 +1,50 @@
 <script setup>
-import Footer from '../components/Footer.vue'
-  import Navbar from '../components/Navbar.vue'
+import { ref } from 'vue';
+import Footer from '../components/Footer.vue';
+import Navbar from '../components/Navbar.vue';
+
+const expandedSections = ref({
+  direitosAutorais: false,
+  inscricao: false,
+  criteriosAvaliacao: false,
+  elegibilidade: false,
+});
+
+const toggleSection = (section) => {
+  expandedSections.value[section] = !expandedSections.value[section];
+};
 </script>
+
 <template>
   <main class="submissions-page">
-      <Navbar></Navbar>
-      <header class="hero-section">
-        <div class="hero-content">
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/2411831586997e82dbeca4d410acf0424efae3e70f92af21ab89ecf4ee92d52a?placeholderIfAbsent=true&apiKey=24c5612ec37d4fbcbfc9ca0edfc13a50"
-            class="hero-overlay"
-            alt=""
-          />
-          <h1 class="hero-title">Submissões</h1>
-        </div>
-      </header>
-  
-      <section class="requirements-section">
-        <h2 class="section-title">Requisitos de Inscrição</h2>
-        <p class="requirements-text">
-          Todos os participantes aceitam ceder os direitos de exibição das suas
-          obras durante o festival.<br />Taxa de inscrição: 5€
-        </p>
-  
-        <div class="eligibility-section">
-          <div class="eligibility-content">
-            <div class="eligibility-details">
-              <h3 class="subsection-title">Elegibilidade</h3>
+    <Navbar></Navbar>
+    <header class="hero-section">
+      <div class="hero-content">
+        <img
+          loading="lazy"
+          src="https://cdn.builder.io/api/v1/image/assets/TEMP/2411831586997e82dbeca4d410acf0424efae3e70f92af21ab89ecf4ee92d52a?placeholderIfAbsent=true&apiKey=24c5612ec37d4fbcbfc9ca0edfc13a50"
+          class="hero-overlay"
+          alt=""
+        />
+        <h1 class="hero-title">Submissões</h1>
+      </div>
+    </header>
+
+    <section class="requirements-section">
+      <h2 class="section-title">Requisitos de Inscrição</h2>
+      <p class="requirements-text">
+        Todos os participantes aceitam ceder os direitos de exibição das suas
+        obras durante o festival.<br />Taxa de inscrição: 5€
+      </p>
+
+      <div class="eligibility-section">
+        <div class="eligibility-content">
+          <div class="eligibility-details">
+            <button class="accordion-button" @click="toggleSection('elegibilidade')" tabindex="0">
+              <span>Elegibilidade</span>
+              <span class="accordion-icon">⌄</span>
+            </button>
+            <div v-if="expandedSections.elegibilidade" class="accordion-content">
               <hr class="divider" />
               <hr class="divider" />
               <p class="eligibility-text">
@@ -36,23 +53,51 @@ import Footer from '../components/Footer.vue'
                 exclusivamente mudos, podendo incluir ou não acompanhamento
                 musical.
               </p>
-  
-              <button class="accordion-button" tabindex="0">
-                <span>Direitos Autorais</span>
-                <span class="accordion-icon">⌄</span>
-              </button>
-  
-              <button class="accordion-button" tabindex="0">
-                <span>Inscrição</span>
-                <span class="accordion-icon">⌄</span>
-              </button>
-  
-              <button class="accordion-button" tabindex="0">
-                <span>Critérios de Avaliação</span>
-                <span class="accordion-icon">⌄</span>
-              </button>
+            </div>
+
+            <button class="accordion-button" @click="toggleSection('direitosAutorais')" tabindex="0">
+              <span>Direitos Autorais</span>
+              <span class="accordion-icon">⌄</span>
+            </button>
+            <div v-if="expandedSections.direitosAutorais" class="accordion-content">
+              <hr class="divider" />
+              <hr class="divider" />
+              <p class="eligibility-text">
+                Os participantes devem assegurar que detêm todos os direitos relacionados ao material enviado, incluindo imagens, música e quaisquer outros elementos incorporados à obra.
+              </p>
+            </div>
+
+            <button class="accordion-button" @click="toggleSection('inscricao')" tabindex="0">
+              <span>Inscrição</span>
+              <span class="accordion-icon">⌄</span>
+            </button>
+            <div v-if="expandedSections.inscricao" class="accordion-content">
+              <hr class="divider" />
+              <hr class="divider" />
+              <p class="eligibility-text">
+                Envio das candidaturas: até 31 de agosto de 2025.
+
+                Divulgação dos filmes selecionados: outubro de 2025
+              </p>
+            </div>
+
+            <button class="accordion-button" @click="toggleSection('criteriosAvaliacao')" tabindex="0">
+              <span>Critérios de Avaliação</span>
+              <span class="accordion-icon">⌄</span>
+            </button>
+            <div v-if="expandedSections.criteriosAvaliacao" class="accordion-content">
+              <hr class="divider" />
+              <hr class="divider" />
+              <p class="eligibility-text">
+                Originalidade e criatividade da obra.
+
+                Qualidade técnica, incluindo cinematografia, edição e trilha sonora.
+
+                Adesão rigorosa ao formato mudo.
+              </p>
             </div>
           </div>
+        </div>
   
           <div class="image-container">
             <img

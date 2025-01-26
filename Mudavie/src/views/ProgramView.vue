@@ -96,9 +96,11 @@
         </div>
         <hr class="divider-line" />
       </div>
-  
-      <h2 class="awards-title">Prémios MUDAVIE - A Celebração do Brilho do Cinema Mudo Moderno!</h2>
-  
+      
+      <section id="premios">
+        <h2 class="awards-title">Prémios MUDAVIE - A Celebração do Brilho do Cinema Mudo Moderno!</h2>
+      </section>
+      
       <div class="content-wrapper">
         <div class="content-grid">
           <div class="description-column">

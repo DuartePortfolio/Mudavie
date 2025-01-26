@@ -86,231 +86,192 @@
   
 <script setup>
 import Footer from '../components/Footer.vue'
-  import Navbar from '../components/Navbar.vue'
+import Navbar from '../components/Navbar.vue'
 </script>
 
-  <style scoped>
-  .about-page {
-    background: #121211;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
+<style scoped>
+.content-column {
+  display: flex;
+  gap: 20px;
+}
+
+.about-page {
+  background: #121211;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.hero-section {
+  position: relative;
+}
+
+.hero-banner {
+  aspect-ratio: 14.08;
+  object-fit: contain;
+  width: 100%;
+  z-index: 10;
+}
+
+.hero-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  min-height: 839px;
+  color: #fff;
+  padding: 348px 70px 278px;
+  text-shadow: 1px 1px 7px #fefcfc;
+}
+
+.hero-background {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.hero-title {
+  position: relative;
+  align-self: center;
+  font: 500 96px Chopin-Trial, sans-serif;
+}
+
+.content-section {
+  margin-top: 89px;
+  padding: 0 36px;
+}
+
+.section-title {
+  color: #fff;
+  font-size: 30px;
+  font-weight: 600;
+  font-family: Chopin-Trial, sans-serif;
+  margin: 20px 0 20px;
+}
+
+.content-grid {
+  display: flex;
+  gap: 50px;
+  margin-bottom: 40px;
+}
+
+.content-image {
+  width: 300px;
+}
+
+.content-text {
+  color: #fff;
+  font: 500 20px Chopin-Trial, sans-serif;
+}
+
+.location-map {
+  aspect-ratio: 2.68;
+  width: 100%;
+  object-fit: contain;
+}
+
+.location-text {
+  color: #fff;
+  font: 400 20px Chopin-Trial, sans-serif;
+  margin-bottom: 50px;
+}
+
+.site-footer {
+  background: #1e201e;
+  margin-top: 162px;
+  padding: 18px 80px 18px 32px;
+}
+
+.footer-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.footer-logo {
+  width: 53px;
+  aspect-ratio: 0.96;
+}
+
+.nav-links {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0;
+}
+
+.nav-link {
+  color: #fff;
+  font: 400 11px Chopin-Trial, sans-serif;
+  text-decoration: none;
+  display: block;
+  margin: 10px 0;
+}
+
+.copyright {
+  color: #fff;
+  font: 400 11px Chopin-Trial, sans-serif;
+  margin-top: 83px;
+}
+
+.footer-content {
+  display: flex;
+  gap: 100px;
+  margin-top: 18px;
+}
+
+.contact-info {
+  color: #fff;
+  font: 400 11px Chopin-Trial, sans-serif;
+}
+
+.footer-heading {
+  margin-bottom: 28px;
+}
+
+.address-text,
+.phone-text,
+.email-text {
+  margin: 10px 0;
+}
+
+.sponsors {
+  text-align: center;
+}
+
+.sponsor-logo {
+  width: 71px;
+  aspect-ratio: 4.44;
+  margin: 10px 0;
+}
+
+.sponsor-type {
+  margin: 32px 0 10px;
+}
+
+.support-logo {
+  width: 101px;
+  aspect-ratio: 2.73;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.social-media {
+  color: #fff;
+  font: 400 11px Chopin-Trial, sans-serif;
+}
+
+.social-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 32px);
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.social-icon {
+  width: 32px;
+  aspect-ratio: 1;
+  object-fit: contain;
+}
   
-  .hero-section {
-    position: relative;
-  }
-  
-  .hero-banner {
-    aspect-ratio: 14.08;
-    object-fit: contain;
-    width: 100%;
-    z-index: 10;
-  }
-  
-  .hero-content {
-    position: relative;
-    min-height: 839px;
-    color: #fff;
-    padding: 348px 70px 278px;
-    text-shadow: 1px 1px 7px #fefcfc;
-  }
-  
-  .hero-background {
-    position: absolute;
-    inset: 0;
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-  }
-  
-  .hero-title {
-    position: relative;
-    font: 500 96px Chopin-Trial, sans-serif;
-  }
-  
-  .content-section {
-    margin-top: 89px;
-    padding: 0 36px;
-  }
-  
-  .section-title {
-    color: #fff;
-    font: 700 32px Chopin-Trial, sans-serif;
-    margin-bottom: 31px;
-  }
-  
-  .content-grid {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 40px;
-  }
-  
-  .content-column {
-    flex: 1;
-  }
-  
-  .content-image {
-    aspect-ratio: 1.34;
-    width: 100%;
-    object-fit: contain;
-  }
-  
-  .content-text {
-    color: #fff;
-    font: 500 24px Chopin-Trial, sans-serif;
-  }
-  
-  .location-map {
-    aspect-ratio: 2.68;
-    width: 100%;
-    object-fit: contain;
-    margin: 40px 0;
-  }
-  
-  .location-text {
-    color: #fff;
-    font: 400 20px Chopin-Trial, sans-serif;
-  }
-  
-  .site-footer {
-    background: #1e201e;
-    margin-top: 162px;
-    padding: 18px 80px 18px 32px;
-  }
-  
-  .footer-nav {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .footer-logo {
-    width: 53px;
-    aspect-ratio: 0.96;
-  }
-  
-  .nav-links {
-    list-style: none;
-    padding: 0;
-    margin: 8px 0;
-  }
-  
-  .nav-link {
-    color: #fff;
-    font: 400 11px Chopin-Trial, sans-serif;
-    text-decoration: none;
-    display: block;
-    margin: 10px 0;
-  }
-  
-  .copyright {
-    color: #fff;
-    font: 400 11px Chopin-Trial, sans-serif;
-    margin-top: 83px;
-  }
-  
-  .footer-content {
-    display: flex;
-    gap: 100px;
-    margin-top: 18px;
-  }
-  
-  .contact-info {
-    color: #fff;
-    font: 400 11px Chopin-Trial, sans-serif;
-  }
-  
-  .footer-heading {
-    margin-bottom: 28px;
-  }
-  
-  .address-text,
-  .phone-text,
-  .email-text {
-    margin: 10px 0;
-  }
-  
-  .sponsors {
-    text-align: center;
-  }
-  
-  .sponsor-logo {
-    width: 71px;
-    aspect-ratio: 4.44;
-    margin: 10px 0;
-  }
-  
-  .sponsor-type {
-    margin: 32px 0 10px;
-  }
-  
-  .support-logo {
-    width: 101px;
-    aspect-ratio: 2.73;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-  }
-  
-  .social-media {
-    color: #fff;
-    font: 400 11px Chopin-Trial, sans-serif;
-  }
-  
-  .social-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 32px);
-    gap: 20px;
-    margin-top: 10px;
-  }
-  
-  .social-icon {
-    width: 32px;
-    aspect-ratio: 1;
-    object-fit: contain;
-  }
-  
-  @media (max-width: 991px) {
-    .hero-banner {
-      max-width: 100%;
-    }
-  
-    .hero-content {
-      padding: 100px 20px 110px;
-    }
-  
-    .hero-title {
-      font-size: 40px;
-    }
-  
-    .content-section {
-      margin-top: 40px;
-      padding: 0 20px;
-    }
-  
-    .content-grid {
-      flex-direction: column;
-    }
-  
-    .content-image {
-      margin-top: 40px;
-    }
-  
-    .content-text {
-      margin-top: 40px;
-    }
-  
-    .site-footer {
-      margin-top: 40px;
-      padding: 0 20px;
-    }
-  
-    .copyright {
-      margin-top: 40px;
-    }
-  
-    .footer-content {
-      flex-direction: column;
-      gap: 40px;
-    }
-  }
-  </style>
+</style>

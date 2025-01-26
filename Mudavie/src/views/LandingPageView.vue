@@ -66,9 +66,6 @@ export default {
         </iframe>
       </div>
     </section>
-    <section class="section section-4">
-      <h2>Section 4</h2>
-    </section>
     <Footer />
   </main>
 </template>

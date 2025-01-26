@@ -8,7 +8,6 @@
           <div class="avatar-container"></div>
           <div class="user-text">
             <h2 class="user-name">{{ username }}</h2>
-            <p class="ticket-type">Tipo de bilhete</p>
           </div>
         </div>
         <button class="edit-button" tabindex="0" @click="editUsername = true">
@@ -23,28 +22,37 @@
       </section>
       <section v-if="editUsername" class="edit-username-section">
         <form @submit.prevent="updateUsername">
-          <input type="text" v-model="newUsername" placeholder="New Username" required />
+          <input type="text" v-model="newUsername" placeholder="Novo Username" required />
           <button type="submit">Update</button>
         </form>
       </section>
       <section class="ticket-section">
         <div class="tickets">
-          <h2 class="section-title">Bilhetes</h2>
+          <h2 class="section-title">Filmes Favoritos</h2>
+          <div class="movie-poster-container">
+            <img 
+              v-for="(poster, index) in favorited"
+              :key="index" 
+              :src="poster" 
+              class="moviePoster" 
+            />
+          </div> 
         </div>
-        <button class="edit-button" tabindex="0">
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/4b468c9bcbc8da0ef12eaab79a1e10c19eeecd064c156ad9681e9483259cab39?placeholderIfAbsent=true&apiKey=24c5612ec37d4fbcbfc9ca0edfc13a50"
-            class="edit-icon"
-            alt="Edit profile"
-          />
-          <span>Editar</span>
-        </button>
+      </section>
+      <section class="ticket-section">
+        <div class="tickets">
+          <h2 class="section-title">Bilhetes</h2>
+          <div v-for="(ticket, index) in store.user.ticketType" :key="index" class="ticket-info">
+            <p>Quantidade: {{ ticket.quantity }}</p>
+            <p>Tipo de Bilhete: {{ ticket.price > 20 ? 'VIP' : 'Normal' }}</p>
+            <p>Duração: {{ ticket.date.includes('11/12/13') ? '3 Dias' : '1 Dia' }}</p>
+          </div>
+        </div>
       </section>
       <section class="personal-info-section">
         <div class="section-header">
           <h2 class="section-title">Informação pessoal</h2>
-          <button class="edit-button" tabindex="0">
+          <button class="edit-button" tabindex="0" @click="editPersonalInfo = true">
             <img
               loading="lazy"
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/4b468c9bcbc8da0ef12eaab79a1e10c19eeecd064c156ad9681e9483259cab39?placeholderIfAbsent=true&apiKey=24c5612ec37d4fbcbfc9ca0edfc13a50"
@@ -54,23 +62,48 @@
             <span>Editar</span>
           </button>
         </div>
-        <div class="info-grid">
+        <div v-if="editPersonalInfo" class="edit-personal-info-section">
+          <form @submit.prevent="updatePersonalInfo">
+            <div class="info-grid">
+              <div class="info-column">
+                <div class="info-group">
+                  <h3 class="info-label">Nome</h3>
+                  <input type="text" v-model="newFirstName" placeholder="First Name" required />
+                  <h3 class="info-label">Endereço de email</h3>
+                  <input type="email" v-model="newEmail" placeholder="Email" required />
+                  <h3 class="info-label">Bio</h3>
+                  <input type="text" v-model="newBio" placeholder="Bio" required />
+                </div>
+              </div>
+              <div class="info-column-secondary">
+                <div class="info-group">
+                  <h3 class="info-label">Sobrenome</h3>
+                  <input type="text" v-model="newLastName" placeholder="Last Name" required />
+                  <h3 class="info-label">Telemóvel</h3>
+                  <input type="text" v-model="newPhone" placeholder="Phone" required />
+                </div>
+              </div>
+            </div>
+            <button type="submit">Update</button>
+          </form>
+        </div>
+        <div v-else class="info-grid">
           <div class="info-column">
             <div class="info-group">
               <h3 class="info-label">Nome</h3>
-              <p class="info-value">Lorem ipsum</p>
+              <p class="info-value">{{ store.user.firstName }}</p>
               <h3 class="info-label">Endereço de email</h3>
-              <p class="info-value">NomeSobrenome@email.com</p>
+              <p class="info-value">{{ store.user.email }}</p>
               <h3 class="info-label">Bio</h3>
-              <p class="info-value">Born to dilli-dally, forced to lock in</p>
+              <p class="info-value">{{ store.user.bio }}</p>
             </div>
           </div>
           <div class="info-column-secondary">
             <div class="info-group">
               <h3 class="info-label">Sobrenome</h3>
-              <p class="info-value">Dolor sit amet</p>
+              <p class="info-value">{{ store.user.lastName }}</p>
               <h3 class="info-label">Telemóvel</h3>
-              <p class="info-value">912345678</p>
+              <p class="info-value">{{ store.user.phone }}</p>
             </div>
           </div>
         </div>
@@ -83,6 +116,7 @@
 <script>
 import { ref } from 'vue';
 import { loginStore } from '../stores/loginStore.js';
+import { movieStore } from '../stores/movies.js';
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
 
@@ -93,9 +127,33 @@ export default {
   },
   setup() {
     const store = loginStore();
+    const movies = movieStore();
     const username = ref(store.getUserInfo.username);
     const newUsername = ref('');
     const editUsername = ref(false);
+    const editPersonalInfo = ref(false);
+    const newFirstName = ref(store.getUserInfo.firstName || '');
+    const newLastName = ref(store.getUserInfo.lastName || '');
+    const newEmail = ref(store.getUserInfo.email || '');
+    const newPhone = ref(store.getUserInfo.phone || '');
+    const newBio = ref(store.getUserInfo.bio || '');
+    const posters = movies.posters;
+    const favorited = [];
+
+// Ensure movies.favorited and movies.posters are valid arrays
+if (Array.isArray(movies.favorited) && Array.isArray(movies.posters)) {
+  movies.favorited.forEach((isFavorited, index) => {
+    if (isFavorited) {
+      // Check if the corresponding poster exists
+      const poster = movies.posters[index];
+      if (poster) {
+        favorited.push(poster);
+      }
+    }
+  });
+} else {
+  console.error("movies.favorited or movies.posters is not an array");
+}
 
     const updateUsername = () => {
       const userInfo = { ...store.getUserInfo, username: newUsername.value };
@@ -105,17 +163,58 @@ export default {
       editUsername.value = false;
     };
 
+    const updatePersonalInfo = () => {
+      const userInfo = {
+        ...store.getUserInfo,
+        firstName: newFirstName.value,
+        lastName: newLastName.value,
+        email: newEmail.value,
+        phone: newPhone.value,
+        bio: newBio.value
+      };
+      store.user.firstName = newFirstName.value;
+      store.user.lastName = newLastName.value;
+      store.user.email = newEmail.value;
+      store.user.phone = newPhone.value;
+      store.user.bio = newBio.value;
+      localStorage.setItem(store.user.username, JSON.stringify(userInfo));
+      editPersonalInfo.value = false;
+    };
+
     return {
       username,
       newUsername,
       editUsername,
-      updateUsername
+      updateUsername,
+      editPersonalInfo,
+      newFirstName,
+      newLastName,
+      newEmail,
+      newPhone,
+      newBio,
+      updatePersonalInfo,
+      store,
+      movies,
+      posters,
+      favorited
     };
   }
 };
 </script>
 
 <style scoped>
+.movie-poster-container {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.moviePoster {
+  width: 120px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 .profile-container {
   background: #fff;
   display: flex;
@@ -206,16 +305,10 @@ export default {
   font-size: 24px;
 }
 
-.ticket-type {
-  font-size: 16px;
-  margin-top: 14px;
-}
-
 .edit-button {
   position: relative;
   font-size: 24px;
   color: #fff;
-  padding: 14px 49px;
   background: none;
   border: none;
   cursor: pointer;
@@ -298,6 +391,23 @@ export default {
 }
 
 .edit-username-section button {
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.edit-personal-info-section form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.edit-personal-info-section input {
+  padding: 10px;
+  font-size: 16px;
+}
+
+.edit-personal-info-section button {
   padding: 10px;
   font-size: 16px;
   cursor: pointer;

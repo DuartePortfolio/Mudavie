@@ -17,6 +17,7 @@ export const movieStore = defineStore('movies', {
     timeInfo: ["11/Sábado/19:00", "11/Sábado/21:00", "11/Sábado/22:00", "12/Domingo/15:00", "12/Domingo/18:00", " / / "],
     favorited: [false, false, false, false, false, false, false, false, false],
     voted: [false, false, false, false, false, false, false, false, false],
+    posters: ["", "", "", "", ""],
     votedMovie: null,
     votes: [10, 20, 30, 40, 50, 0, 0, 0, 0],
     placeHolderPoster: "https://m.media-amazon.com/images/M/MV5BZGFmY2ZiMTUtMjUwMy00YmU4LTkzMjAtZjU2MzNlYzc5ZTE3XkEyXkFqcGc@._V1_.jpg",
@@ -69,12 +70,15 @@ export const movieStore = defineStore('movies', {
     },
     getMoviePoster: (state) => {
       
-      return (title, year, elementID, placeHolder) => {
+      return (title, year, elementID, placeHolder, posterNumber) => {
         searchMovie(title, year).then((movieData)=>{
           if (placeHolder){
             document.getElementById(elementID).src = state.placeHolderPoster
           }else{
             document.getElementById(elementID).src = movieData.movieData.Poster
+            console.log(posterNumber);
+            
+            state.posters[posterNumber - 1] = movieData.movieData.Poster
           }
         })
       }

@@ -10,7 +10,6 @@
   <Navbar></Navbar>
   <div class="ticket-page">
     <header class="header">
-      
       <div class="hero-section">
         <img
           loading="lazy"
@@ -20,7 +19,7 @@
         />
         <h1 class="hero-title">Bilhetes</h1>
       </div>
-    </header>
+    </header> 
 
     <main class="main-content">
       <div id="selectedMovie" v-if="movieStore().focusedPoster !== ''">
@@ -52,55 +51,54 @@
 
           <section class="ticket-section">
             <div class="bilhetes1">
-          <div class="fundo" />
-          <div class="botoComprar" />
-          <button class="purchase-btn" @click="purchaseTickets">Comprar</button>
-          <div class="comprar" @click="purchaseTickets">Comprar</div>
-          <div class="dia3" v-if="!isAllDays">
-              <div class="bilhete1" />
-              <div class="div">+</div>
-              <div class="div1">0</div>
-              <div class="div2">-</div>
-              <div class="dia3Child" />
-              <div class="preo">{{!isVIP ? "20€" : "35€"}}</div>
-              <div class="data">13 de janeiro</div>
-          </div>
-          <div class="dia2" v-if="!isAllDays">
-              <div class="bilhete1" />
-              <div class="div">+</div>
-              <div class="div1">0</div>
-              <div class="div2">-</div>
-              <div class="dia3Child" />
-              <div class="preo1">{{!isVIP ? "20€" : "35€"}}</div>
-              <div class="data1">12 de janeiro</div>
-          </div>
-          <div class="dia1">
-              <div class="bilhete1" />
-              <div class="div">+</div>
-              <div class="div1">0</div>
-              <div class="div2">-</div>
-              <div class="dia3Child" />
-              <div class="preo1">{{!isVIP ? (!isAllDays ? "20€" : "40€") : (!isAllDays ? "35€" : "80€")}}</div>
-              <div class="data2">{{!isAllDays ? "11 de janeiro" : "Todos os dias"}}</div>
-          </div>
-          <div class="tipos">
-              <div id="changeVIP" class="tipo2" @click="changeVIP">
+              <div class="fundo" />
+              <div class="botoComprar" />
+              <div class="comprar" @click="purchaseTickets">Comprar</div>
+              <div class="dia3" v-if="!isAllDays">
+                <div class="bilhete1" />
+                <div @click="increment(!isVIP ? 2 : 6)" class="div">+</div>
+                <div class="div1">{{!isVIP ? tickets[2].quantity : tickets[6].quantity}}</div>
+                <div @click="decrement(!isVIP ? 2 : 6)" class="div2">-</div>
+                <div class="dia3Child" />
+                <div class="preo">{{!isVIP ? "20€" : "35€"}}</div>
+                <div class="data">13 de janeiro</div>
+              </div>
+              <div class="dia2" v-if="!isAllDays">
+                <div class="bilhete1" />
+                <div @click="increment(!isVIP ? 1 : 5)" class="div">+</div>
+                <div class="div1">{{!isVIP ? tickets[1].quantity : tickets[5].quantity}}</div>
+                <div @click="decrement(!isVIP ? 1 : 5)" class="div2">-</div>
+                <div class="dia3Child" />
+                <div class="preo1">{{!isVIP ? "20€" : "35€"}}</div>
+                <div class="data1">12 de janeiro</div>
+              </div>
+              <div class="dia1">
+                <div class="bilhete1" />
+                <div @click="increment(!isVIP ? (!isAllDays ? 0 : 3) : (!isAllDays ? 4 : 7))" class="div">+</div>
+                <div class="div1">{{!isVIP ? (!isAllDays ? tickets[0].quantity : tickets[3].quantity) : (!isAllDays ? tickets[4].quantity : tickets[7].quantity)}}</div>
+                <div @click="decrement(!isVIP ? (!isAllDays ? 0 : 3) : (!isAllDays ? 4 : 7))" class="div2">-</div>
+                <div class="dia3Child" />
+                <div class="preo1">{{!isVIP ? (!isAllDays ? "20€" : "40€") : (!isAllDays ? "35€" : "80€")}}</div>
+                <div class="data2">{{!isAllDays ? "11 de janeiro" : "Todos os dias"}}</div>
+              </div>
+              <div class="tipos">
+                <div id="changeVIP" class="tipo2" @click="changeVIP">
                   <div class="tipo21">VIP</div>
-              </div>
-              <div id="changeNormal" class="tipo1" @click="changeNormal">
+                </div>
+                <div id="changeNormal" class="tipo1" @click="changeNormal">
                   <div class="tipo11">Normal</div>
+                </div>
               </div>
-          </div>
-          <div class="dias">
-              <div id="changeAllDays" class="tipo2" @click="changeAllDays">
+              <div class="dias">
+                <div id="changeAllDays" class="tipo2" @click="changeAllDays">
                   <div class="dias21">3 Dias</div>
-              </div>
-              <div id="changeSingleDay" class="tipo1" @click="changeSingleDay">
+                </div>
+                <div id="changeSingleDay" class="tipo1" @click="changeSingleDay">
                   <div class="dias11">Diário</div>
+                </div>
               </div>
-          </div>
-          <div class="titulo">Bilhetes</div>
-      </div>
+              <div class="titulo">Bilhetes</div>
+            </div>
           </section>
         </div>
       </div>
@@ -111,33 +109,31 @@
 </template>
 
 <script>
-  
-  
-  export default {
-      name: "Bilhetes",
-      data() {
-        let store = loginStore()
-        return {
-            store: loginStore(),
-            username: store.user[0],
-            isRegistarOpen: false,
-            isVIP: false,
-            isAllDays: false,
+export default {
+  name: "Bilhetes",
+  data() {
+    let store = loginStore()
+    return {
+      store: loginStore(),
+      username: store.user[0],
+      isRegistarOpen: false,
+      isVIP: false,
+      isAllDays: false,
 
-            tickets: [
-              { date: "11 de janeiro", price: 20, quantity: 0 },
-              { date: "12 de janeiro", price: 20, quantity: 0 },
-              { date: "13 de janeiro", price: 20, quantity: 0 },
-              { date: "11/12/13 de janeiro", price: 40, quantity: 0 },
-              { date: "11 de janeiro", price: 35, quantity: 0 },
-              { date: "12 de janeiro", price: 35, quantity: 0 },
-              { date: "13 de janeiro", price: 35, quantity: 0 },
-              { date: "11/12/13 de janeiro", price: 80, quantity: 0 },
-            ],
-          }
-        },
-      methods: {
-        increment(index) {
+      tickets: [
+        { date: "11 de janeiro", price: 20, quantity: 0 },
+        { date: "12 de janeiro", price: 20, quantity: 0 },
+        { date: "13 de janeiro", price: 20, quantity: 0 },
+        { date: "11/12/13 de janeiro", price: 40, quantity: 0 },
+        { date: "11 de janeiro", price: 35, quantity: 0 },
+        { date: "12 de janeiro", price: 35, quantity: 0 },
+        { date: "13 de janeiro", price: 35, quantity: 0 },
+        { date: "11/12/13 de janeiro", price: 80, quantity: 0 },
+      ],
+    }
+  },
+  methods: {
+    increment(index) {
       this.tickets[index].quantity++
     },
 
@@ -146,46 +142,59 @@
         this.tickets[index].quantity--
       }
     },
-        purchaseTickets() {
+    purchaseTickets() {
       let userStore = loginStore()
       this.tickets.forEach(ticket => {
         if (ticket.quantity > 0) {
+          console.log(ticket);
           userStore.buyTicket(ticket)
         }
       })
+      this.tickets = [
+        { date: "11 de janeiro", price: 20, quantity: 0 },
+        { date: "12 de janeiro", price: 20, quantity: 0 },
+        { date: "13 de janeiro", price: 20, quantity: 0 },
+        { date: "11/12/13 de janeiro", price: 40, quantity: 0 },
+        { date: "11 de janeiro", price: 35, quantity: 0 },
+        { date: "12 de janeiro", price: 35, quantity: 0 },
+        { date: "13 de janeiro", price: 35, quantity: 0 },
+        { date: "11/12/13 de janeiro", price: 80, quantity: 0 },
+      ]
     },
-        changeAllDays() {
-            this.isAllDays = true;
-            document.getElementById("changeSingleDay").style.backgroundColor = "#282934"
-            document.getElementById("changeAllDays").style.backgroundColor = "#ccc26e"
-        },
-        changeSingleDay() {
-            this.isAllDays = false;
-            document.getElementById("changeSingleDay").style.backgroundColor = "#ccc26e"
-            document.getElementById("changeAllDays").style.backgroundColor = "#282934"
-        },
-        changeVIP() {
-            this.isVIP = true;
-            document.getElementById("changeNormal").style.backgroundColor = "#282934"
-            document.getElementById("changeVIP").style.backgroundColor = "#ccc26e"
-        },
-        changeNormal() {
-            this.isVIP = false;
-            document.getElementById("changeNormal").style.backgroundColor = "#ccc26e"
-            document.getElementById("changeVIP").style.backgroundColor = "#282934"
-        },
-        openRegistar() {
-            this.isRegistarOpen = true;
-        },
-        closeRegistar() {
-            this.isRegistarOpen = false;
-        },
-        onFestivalTextClick() {
-            // Add your code here
-        },
-        onBilhetesTextClick() {
-            this.$router.push("/");
-        }}}
+    changeAllDays() {
+      this.isAllDays = true;
+      document.getElementById("changeSingleDay").style.backgroundColor = "#7f8585"
+      document.getElementById("changeAllDays").style.backgroundColor = "#ccc26e"
+    },
+    changeSingleDay() {
+      this.isAllDays = false;
+      document.getElementById("changeSingleDay").style.backgroundColor = "#ccc26e"
+      document.getElementById("changeAllDays").style.backgroundColor = "#7f8585"
+    },
+    changeVIP() {
+      this.isVIP = true;
+      document.getElementById("changeNormal").style.backgroundColor = "#7f8585"
+      document.getElementById("changeVIP").style.backgroundColor = "#ccc26e"
+    },
+    changeNormal() {
+      this.isVIP = false;
+      document.getElementById("changeNormal").style.backgroundColor = "#ccc26e"
+      document.getElementById("changeVIP").style.backgroundColor = "#7f8585"
+    },
+    openRegistar() {
+      this.isRegistarOpen = true;
+    },
+    closeRegistar() {
+      this.isRegistarOpen = false;
+    },
+    onFestivalTextClick() {
+      // Add your code here
+    },
+    onBilhetesTextClick() {
+      this.$router.push("/");
+    }
+  }
+}
 </script>
 
 <style scoped>
@@ -242,7 +251,7 @@
           bottom: 0%;
           left: 0%;
           border-radius: 10px;
-          background-color: #7f8585;
+          background-color: #282934;
       }
       .botoComprar {
           position: absolute;
@@ -253,7 +262,7 @@
           bottom: 1.84%;
           left: 3.47%;
           border-radius: 121px;
-          background-color: #282934;
+          background-color: #7f8585;
       }
       .comprar {
           position: absolute;
@@ -261,7 +270,7 @@
           top: 92.64%;
           left: 8.44%;
           font-weight: 600;
-          display: flex;
+          display: flex; 
           align-items: center;
           justify-content: center;
       }
@@ -433,14 +442,16 @@
           bottom: 0%;
           left: 53.21%;
           border-radius: 5px;
-          background-color: #282934;
+          background-color: #7f8585;
           cursor: pointer;
       }
       .tipo21 {
           text-align: center;
-          justify-items: center;
+          align-items: center;
           font-weight: 600;
           cursor: pointer;
+          width: 100%;
+          height: 100%;
       }
       .tipo1 {
           position: absolute;
@@ -459,6 +470,8 @@
           justify-items: center;
           font-weight: 600;
           cursor: pointer;
+          width: 100%;
+          height: 100%;
       }
       .tipos {
           position: absolute;
@@ -487,12 +500,16 @@
           text-align: center;
           justify-items: center;
           font-weight: 600;
+          width: 100%;
+          height: 100%;
       }
       .dias11 {
           position: absolute;
           text-align: center;
           justify-items: center;
           font-weight: 600;
+          width: 100%;
+          height: 100%;
       }
       .dias {
           position: absolute;
@@ -517,11 +534,11 @@
       }
       .bilhetes1 {
           position: absolute;
-          top: 175px;
-          left: 998px;
+          top: 950px;
+          left: 70%;
           box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
           width: 403px;
-          height: 870px;
+          height: 700px;
           text-align: center;
       }
       .festival {

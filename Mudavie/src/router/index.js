@@ -9,7 +9,7 @@ import ProgramView from '../views/ProgramView.vue'
 import SubmissionsView from '../views/SubmissionsView.vue'
 import NewsView from '../views/NewsView.vue'
 import ProfileView from '../views/ProfileView.vue'
-import NotFoundView from '../views/NotFoundView.vue'
+import NotFoundView from '../views/NotFoundView.vue' 
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -37,6 +37,7 @@ const router = createRouter({
       path: '/News',
       name: 'News',
       component: NewsView,
+      meta: { requiresVIP: true },
     },
     {
       path: '/Submissions',
@@ -68,12 +69,19 @@ const router = createRouter({
   ],
 })
 
-router.beforeEach((to,from, next) => {
-  const store = loginStore()
+router.beforeEach((to, from, next) => {
+  const store = loginStore();
   const isAuthenticated = store.isAuthenticated;
-  
+
   if (to.meta.requiresAuth && !isAuthenticated) {
-    next({name:"Home"});
+    next({ name: 'Home' });
+  } else if (to.meta.requiresVIP) {
+    const hasVIPTicket = store.user.ticketType.some(ticket => ticket.price > 20);
+    if (!hasVIPTicket) {
+      next({ name: 'Home' });
+    } else {
+      next();
+    }
   } else {
     next();
   }

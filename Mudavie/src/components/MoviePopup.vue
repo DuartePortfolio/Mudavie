@@ -90,6 +90,9 @@
                 // alert("Adicionado aos favoritos")
                 movieStore().favorited[movieStore().focusedMovie] = true
               } 
+              loginStore().favorited = movieStore().favorited
+              console.log(loginStore().favorited);
+              
           },
 
           toggleVote(event) {
@@ -107,6 +110,7 @@
                   movieStore().votes[movieStore().votedMovie] -= 1
                 }
                 movieStore().votedMovie = movieStore().focusedMovie
+                loginStore().voted = movieStore().voted
                 movieStore().votes[movieStore().votedMovie] += 1
               }
           },

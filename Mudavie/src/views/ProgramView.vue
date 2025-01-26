@@ -96,11 +96,9 @@
         </div>
         <hr class="divider-line" />
       </div>
-      
-      <section id="premios">
-        <h2 class="awards-title">Prémios MUDAVIE - A Celebração do Brilho do Cinema Mudo Moderno!</h2>
-      </section>
-      
+  
+      <h2 class="awards-title">Prémios MUDAVIE - A Celebração do Brilho do Cinema Mudo Moderno!</h2>
+  
       <div class="content-wrapper">
         <div class="content-grid">
           <div class="description-column">
@@ -176,15 +174,15 @@ export default {
   data() {
     let movies = movieStore()
     return {
-      moviePoster1: movies.getMoviePoster(movies.selectedMovies[0], movies.movieYears[0], "poster1", false),
-      moviePoster2: movies.getMoviePoster(movies.selectedMovies[1], movies.movieYears[1], "poster2", false),
-      moviePoster3: movies.getMoviePoster(movies.selectedMovies[2], movies.movieYears[2], "poster3", false),
-      moviePoster4: movies.getMoviePoster(movies.selectedMovies[3], movies.movieYears[3], "poster4", false),
-      moviePoster5: movies.getMoviePoster(movies.selectedMovies[4], movies.movieYears[4], "poster5", false),
-      moviePoster6: movies.getMoviePoster(movies.selectedMovies[5], movies.movieYears[5], "poster6", true),
-      moviePoster7: movies.getMoviePoster(movies.selectedMovies[5], movies.movieYears[5], "poster7", true),
-      moviePoster8: movies.getMoviePoster(movies.selectedMovies[5], movies.movieYears[5], "poster8", true),
-      moviePoster9: movies.getMoviePoster(movies.selectedMovies[5], movies.movieYears[5], "poster9", true),
+      moviePoster1: movies.getMoviePoster(movies.selectedMovies[0], movies.movieYears[0], "poster1", false, 1),
+      moviePoster2: movies.getMoviePoster(movies.selectedMovies[1], movies.movieYears[1], "poster2", false, 2),
+      moviePoster3: movies.getMoviePoster(movies.selectedMovies[2], movies.movieYears[2], "poster3", false, 3),
+      moviePoster4: movies.getMoviePoster(movies.selectedMovies[3], movies.movieYears[3], "poster4", false, 4),
+      moviePoster5: movies.getMoviePoster(movies.selectedMovies[4], movies.movieYears[4], "poster5", false, 5),
+      moviePoster6: movies.getMoviePoster(movies.selectedMovies[5], movies.movieYears[5], "poster6", true, 6),
+      moviePoster7: movies.getMoviePoster(movies.selectedMovies[5], movies.movieYears[5], "poster7", true, 7),
+      moviePoster8: movies.getMoviePoster(movies.selectedMovies[5], movies.movieYears[5], "poster8", true, 8),
+      moviePoster9: movies.getMoviePoster(movies.selectedMovies[5], movies.movieYears[5], "poster9", true, 9),
     }
   },
   methods: {

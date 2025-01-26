@@ -242,10 +242,18 @@ const toggleSection = (section) => {
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    font-family: Chopin-Trial, sans-serif;
   }
   
   .hero-section {
     position: relative;
+    
+  }
+
+  .hero-title {
+    font-size: 96px;
+    font-weight: 500;
+    text-shadow: 1px 1px 7px #fefcfc;
   }
   
   .hero-image {
